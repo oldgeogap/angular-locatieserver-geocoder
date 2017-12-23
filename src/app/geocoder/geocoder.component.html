@@ -6,7 +6,7 @@
     <input class="geocoder-search-input"
           placeholder="Zoeken op adres, postcode of perceel..."
           [(ngModel)]="searchInput"
-          (keyup)="suggest()"
+          (keyup)="suggest($event)"
           (focus)="suggest()"
           type="text"
           maxlength="100">
@@ -22,6 +22,7 @@
             (click)="lookup(place.id)"
             [ngClass]="{'focus-background': isHighlighted(i)}">
             <span [innerHTML]="place.highlight"></span>
+            <p> {{place.type}} </p>
         </li>
       </ul>
     </div>

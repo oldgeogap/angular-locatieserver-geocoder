@@ -31,12 +31,16 @@ export class GeocoderComponent implements OnInit {
     this.geocoderService.lookup(id).then((lookupObj) => {
       this.foundPlace = lookupObj;
       this.fillInput(this.foundPlace.weergavenaam);
-      this.clearPlaces();
       this.placeFound.emit(this.foundPlace);
+      this.clearPlaces();
     });
   }
 
-  public suggest() {
+  public suggest(event: KeyboardEvent) {
+    if (event && event.code && event.code === 'Enter') {
+      return;
+    }
+
     if (this.searchInput.length > this.searchThreshold) {
       this.geocoderService.suggest(this.searchInput).then((suggestResponse) => {
         this.places = suggestResponse.places;
@@ -59,9 +63,6 @@ export class GeocoderComponent implements OnInit {
     this.collations = [];
   }
 
-  public resetIndex() {
-    this.selectedIndex = -1;
-  }
 
   public handleEnter() {
     if (this.selectedIndex === -1) {
@@ -69,7 +70,6 @@ export class GeocoderComponent implements OnInit {
     }
     const selectedPlace = this.places[this.selectedIndex];
     this.lookup(selectedPlace.id);
-    console.log(selectedPlace);
   }
 
   public isNoResultsFound() {
@@ -104,4 +104,9 @@ export class GeocoderComponent implements OnInit {
       this.selectedIndex++
     }
   }
+
+  public resetIndex() {
+    this.selectedIndex = -1;
+  }
+
 }
