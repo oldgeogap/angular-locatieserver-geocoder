@@ -1,0 +1,17 @@
+.geocoder-suggestions-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.geocoder-search-input {
+  width: 300px;
+}
+
+.geocoder-suggestion {
+
+}
+
+.geocoder-suggestion:hover {
+  cursor: pointer;
+  background-color: 'grey';
+}

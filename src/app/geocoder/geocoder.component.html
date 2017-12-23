@@ -1,0 +1,30 @@
+<div class="geocoder-container">
+  <div class="geocoder-search-container">
+    <input class="geocoder-search-input"
+          placeholder="Zoeken op adres of perceel..."
+          [(ngModel)]="searchInput"
+          (keyup)="suggest()"
+          (focus)="suggest()"
+          type="text"
+          maxlength="100">
+    <button (click)="suggest()">Zoeken</button>
+    <button (click)="clear()">Clear</button>
+  </div>
+  <div class="geocoder-suggestions-container">
+    <div *ngIf="suggestions.length > 0">
+      <ul class="geocoder-suggestions-list">
+        <li class="geocoder-suggestion"
+            *ngFor="let suggestion of suggestions"
+            (click)="lookup(suggestion.id)"
+            [innerHTML]="suggestion.highlight">
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isNoResultsFound()">
+      Geen zoekresultaten gevonden voor <strong> {{this.searchInput}} </strong>.
+    </div>
+  </div>
+  <div class="geocoder-spellcheck-container">
+
+  </div>
+</div>
