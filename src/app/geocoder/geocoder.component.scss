@@ -1,4 +1,4 @@
-.geocoder-suggestions-list {
+.geocoder-suggestions-list, .geocoder-collations-list {
   list-style-type: none;
   padding-left: 0;
 }
@@ -11,7 +11,11 @@
 
 }
 
-.geocoder-suggestion:hover {
+.geocoder-suggestion:hover, .geocoder-collation:hover {
   cursor: pointer;
-  background-color: 'grey';
+  background-color: grey;
+}
+
+.focus-background {
+  background-color: grey;
 }

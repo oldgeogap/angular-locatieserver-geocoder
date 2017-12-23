@@ -14,7 +14,10 @@ export class SuggestResponse {
 export class SuggestResultObject {
   highlighting: {};
   response: SuggestResponse;
-  spellcheck: {};
+  spellcheck: {
+    collations: any,
+    suggestions: any
+  };
 }
 
 

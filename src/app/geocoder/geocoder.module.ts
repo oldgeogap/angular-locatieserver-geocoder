@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +8,7 @@ import { GeocoderService } from './geocoder.service';
 
 
 @NgModule({
-  imports: [ HttpModule, HttpClientModule, FormsModule, CommonModule ],
+  imports: [ HttpClientModule, FormsModule, CommonModule ],
   exports: [ GeocoderComponent ],
   declarations: [ GeocoderComponent ],
   providers: [ GeocoderService ]

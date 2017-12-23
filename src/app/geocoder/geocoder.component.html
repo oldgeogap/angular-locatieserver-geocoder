@@ -1,7 +1,10 @@
-<div class="geocoder-container">
+<div  (keydown.ArrowUp)="moveUp()"
+      (keydown.ArrowDown)="moveDown()"
+      (keydown.Enter)="handleEnter()"
+      class="geocoder-container">
   <div class="geocoder-search-container">
     <input class="geocoder-search-input"
-          placeholder="Zoeken op adres of perceel..."
+          placeholder="Zoeken op adres, postcode of perceel..."
           [(ngModel)]="searchInput"
           (keyup)="suggest()"
           (focus)="suggest()"
@@ -11,17 +14,29 @@
     <button (click)="clear()">Clear</button>
   </div>
   <div class="geocoder-suggestions-container">
-    <div *ngIf="suggestions.length > 0">
+    <div *ngIf="places.length > 0">
       <ul class="geocoder-suggestions-list">
         <li class="geocoder-suggestion"
-            *ngFor="let suggestion of suggestions"
-            (click)="lookup(suggestion.id)"
-            [innerHTML]="suggestion.highlight">
+            tabindex={{i}}
+            *ngFor="let place of places; let i = index;"
+            (click)="lookup(place.id)"
+            [ngClass]="{'focus-background': isHighlighted(i)}">
+            <span [innerHTML]="place.highlight"></span>
         </li>
       </ul>
     </div>
     <div *ngIf="isNoResultsFound()">
       Geen zoekresultaten gevonden voor <strong> {{this.searchInput}} </strong>.
+    </div>
+    <div *ngIf="showCollations()">
+      <ul class="geocoder-collations-list">
+        <li class="geocoder-collation"
+            tabindex={{i}}
+            (click)="fillInput(collation.naam);suggest()"
+            *ngFor="let collation of collations; let i = index;"
+            [innerHTML]="collation.weergavenaam">
+        </li>
+      </ul>
     </div>
   </div>
   <div class="geocoder-spellcheck-container">
