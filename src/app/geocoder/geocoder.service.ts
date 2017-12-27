@@ -72,7 +72,7 @@ export class GeocoderService {
   }
 
   /**
-   * Parse WKT in lookup response so OpenLayers can handle it.
+   * Parse WKT in lookup response.
    */
   private formatLookupResponse(lookupResultObject: LookupResultObject) {
     const formatted = lookupResultObject.response.docs.map((lookupResult) => {

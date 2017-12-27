@@ -1,35 +1,36 @@
 <div  (keydown.ArrowUp)="moveUp()"
       (keydown.ArrowDown)="moveDown()"
       (keydown.Enter)="handleEnter()"
-      class="geocoder-container">
+      class="geocoder-container"
+      >
   <div class="geocoder-search-container">
     <input class="geocoder-search-input"
-          placeholder="Zoeken op adres, postcode of perceel..."
+          placeholder="Zoek op adres, postcode of perceel..."
           [(ngModel)]="searchInput"
           (keyup)="suggest($event)"
           (focus)="suggest()"
           type="text"
           maxlength="100">
-    <button (click)="suggest()">Zoeken</button>
-    <button (click)="clear()">Clear</button>
+    <button class="searchButton" (click)="suggest()" [ngClass]="{'highlight': canQuery()}"> <svg aria-hidden="true" data-fa-processed="" data-prefix="fal" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-search fa-w-16 fa-9x"><path fill="currentColor" d="M508.5 481.6l-129-129c-2.3-2.3-5.3-3.5-8.5-3.5h-10.3C395 312 416 262.5 416 208 416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c54.5 0 104-21 141.1-55.2V371c0 3.2 1.3 6.2 3.5 8.5l129 129c4.7 4.7 12.3 4.7 17 0l9.9-9.9c4.7-4.7 4.7-12.3 0-17zM208 384c-97.3 0-176-78.7-176-176S110.7 32 208 32s176 78.7 176 176-78.7 176-176 176z" class=""></path></svg></button>
+    <button class="closeButton" (click)="clear()" [ngClass]="{'highlight': canClear()}"> <svg aria-hidden="true" data-fa-processed="" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-times fa-w-12 fa-7x"><path fill="currentColor" d="M217.5 256l137.2-137.2c4.7-4.7 4.7-12.3 0-17l-8.5-8.5c-4.7-4.7-12.3-4.7-17 0L192 230.5 54.8 93.4c-4.7-4.7-12.3-4.7-17 0l-8.5 8.5c-4.7 4.7-4.7 12.3 0 17L166.5 256 29.4 393.2c-4.7 4.7-4.7 12.3 0 17l8.5 8.5c4.7 4.7 12.3 4.7 17 0L192 281.5l137.2 137.2c4.7 4.7 12.3 4.7 17 0l8.5-8.5c4.7-4.7 4.7-12.3 0-17L217.5 256z" class=""></path></svg></button>
   </div>
   <div class="geocoder-suggestions-container">
-    <div *ngIf="places.length > 0">
+    <div class="geocoder-suggestions-results" *ngIf="places.length > 0">
       <ul class="geocoder-suggestions-list">
         <li class="geocoder-suggestion"
             tabindex={{i}}
             *ngFor="let place of places; let i = index;"
             (click)="lookup(place.id)"
             [ngClass]="{'focus-background': isHighlighted(i)}">
-            <span [innerHTML]="place.highlight"></span>
-            <p> {{place.type}} </p>
+            <p class="geocoder-suggestion-title" [innerHTML]="place.highlight"></p>
+            <p class="geocoder-suggestion-type"> {{place.type}} </p>
         </li>
       </ul>
     </div>
-    <div *ngIf="isNoResultsFound()">
-      Geen zoekresultaten gevonden voor <strong> {{this.searchInput}} </strong>.
+    <div class="geocoder-no-results" *ngIf="isNoResultsFound()">
+      <p>Geen zoekresultaten gevonden voor <strong> {{this.searchInput}}</strong>.</p>
     </div>
-    <div *ngIf="showCollations()">
+    <div class="geocoder-collation-container" *ngIf="showCollations()">
       <ul class="geocoder-collations-list">
         <li class="geocoder-collation"
             tabindex={{i}}
@@ -39,8 +40,5 @@
         </li>
       </ul>
     </div>
-  </div>
-  <div class="geocoder-spellcheck-container">
-
   </div>
 </div>

@@ -14,7 +14,7 @@ export class GeocoderComponent implements OnInit {
   public searchInput = '';
   public places = [];
   public collations = [];
-  public searchThreshold = 3;
+  public searchThreshold = 2;
   public foundPlace: any = null;
   public selectedItem = [];
   public selectedIndex = -1;
@@ -109,4 +109,15 @@ export class GeocoderComponent implements OnInit {
     this.selectedIndex = -1;
   }
 
+  public canQuery() {
+    if (this.searchInput.length > this.searchThreshold) {
+      return true;
+    }
+  }
+
+  public canClear() {
+    if (this.searchInput.length > 0) {
+      return true;
+    }
+  }
 }
