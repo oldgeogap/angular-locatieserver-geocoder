@@ -6,8 +6,8 @@ import { GeocoderSuggest } from './geocoder.model';
 
 // * Make sure terraformer and terraformer WKT parser is installed */
 // import * as Terraformer from 'terraformer';
-import * as terraformerWktParser from 'terraformer-wkt-parser';
-
+// import * as terraformerWktParser from 'terraformer-wkt-parser';
+const terraformerWktParser = require('terraformer-wkt-parser');
 @Injectable()
 export class GeocoderService {
   public geocoderBaseUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3';
