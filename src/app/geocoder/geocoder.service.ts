@@ -12,15 +12,16 @@ export class GeocoderService {
   public geocoderBaseUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3';
   constructor(
     private http: HttpClient,
-  ) {
+  ) {}
 
-  }
+  public suggest(query: string, options?) {
+    let fq = '*';
+    if (options.fq) {fq = options.fq;};
 
-  public suggest(query: string) {
     return this.http.get(`${this.geocoderBaseUrl}/suggest?`, {
       params: {
         q: query,
-        fq: '*' // Also get percelen
+        fq: fq // Also get percelen
       }
     }).toPromise().then((suggestResultObject: SuggestResultObject) => {
       const collations = this.parseCollations(suggestResultObject.spellcheck.collations);
@@ -40,12 +41,14 @@ export class GeocoderService {
     });
   }
 
-  public free(searchTerm: string) {
+  public free(searchTerm: string, options?) {
+    let fq = '*';
+    if (options.fq) {fq = options.fq;};
     return this.http.get(`${this.geocoderBaseUrl}/free?`, {
       params: {
         q: searchTerm,
         fl: '*',
-        fq: '*'
+        fq: fq
       },
     }).toPromise().then((freeResultObject: LookupResultObject) => {
       return this.formatLookupResponse(freeResultObject);
