@@ -4,13 +4,13 @@
   color: #797979;
 }
 
-:-moz-placeholder { 
+:-moz-placeholder {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
-::-moz-placeholder { 
+::-moz-placeholder {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
@@ -22,13 +22,13 @@
   color: #797979;
 }
 
-::-ms-input-placeholder { 
+::-ms-input-placeholder {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
-:placeholder-shown { 
+:placeholder-shown {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
@@ -61,7 +61,7 @@ p, span, input, li{
   padding: 15px;
   border: none;
   width: 262px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 button{
@@ -159,4 +159,12 @@ svg{
 .geocoder-collation-container li{
   padding: 15px;
   border-bottom: 1px solid #f1f1f1;
+}
+
+.searchButton{
+  height: 20px;
+}
+
+.closeButton{
+  height: 26px;
 }

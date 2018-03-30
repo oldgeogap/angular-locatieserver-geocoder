@@ -3,17 +3,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { SuggestResultObject, SuggestResult, LookupResultObject, LookupResult } from './locatieserver.model';
 import { GeocoderSuggest } from './geocoder.model';
-
 // * Make sure terraformer and terraformer WKT parser is installed */
 // import * as Terraformer from 'terraformer';
-// import * as terraformerWktParser from 'terraformer-wkt-parser';
-const terraformerWktParser = require('terraformer-wkt-parser');
+import * as terraformerWktParser from 'terraformer-wkt-parser';
+// const terraformerWktParser = require('terraformer-wkt-parser');
 @Injectable()
 export class GeocoderService {
   public geocoderBaseUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3';
   constructor(
     private http: HttpClient,
   ) {
+
   }
 
   public suggest(query: string) {

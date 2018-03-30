@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit,  ViewChild, ElementRef} from '@angular/core';
 import { GeocoderService } from './geocoder.service';
 import { GeocoderSuggest } from './geocoder.model';
+import * as L from 'leaflet';
 
 @Component({
   styleUrls: ['geocoder.component.scss'],
@@ -8,7 +9,8 @@ import { GeocoderSuggest } from './geocoder.model';
   selector: 'geocoder'
 })
 
-export class GeocoderComponent implements OnInit {
+export class GeocoderComponent implements OnInit, AfterViewInit {
+  @ViewChild('geocoder') private geocoderRef: ElementRef
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
 
   public searchInput = '';
@@ -23,8 +25,11 @@ export class GeocoderComponent implements OnInit {
   constructor(public geocoderService: GeocoderService) {
   }
 
-  public ngOnInit() {
+  ngOnInit() {
+  }
 
+  ngAfterViewInit() {
+    L.DomEvent.disableClickPropagation(this.geocoderRef.nativeElement);
   }
 
   public lookup(id: string) {
