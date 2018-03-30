@@ -40,8 +40,16 @@ export class GeocoderService {
     });
   }
 
-  public free() {
-
+  public free(searchTerm: string) {
+    return this.http.get(`${this.geocoderBaseUrl}/free?`, {
+      params: {
+        q: searchTerm,
+        fl: '*',
+        fq: '*'
+      },
+    }).toPromise().then((freeResultObject: LookupResultObject) => {
+      return this.formatLookupResponse(freeResultObject);
+    });
   }
 
   private parseCollations(collations) {
