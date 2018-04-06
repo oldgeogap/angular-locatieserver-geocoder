@@ -10,7 +10,7 @@ import * as L from 'leaflet';
 })
 
 export class GeocoderComponent implements OnInit, AfterViewInit {
-  @ViewChild('geocoder') private geocoderRef: ElementRef
+  @ViewChild('geocoder') private geocoderRef: ElementRef;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
 
   public searchInput = '';
@@ -62,7 +62,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     this.clearPlaces();
   }
 
-  public clearPlaces(){
+  public clearPlaces() {
     this.resetIndex();
     this.places = [];
     this.collations = [];
@@ -80,7 +80,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
   public isNoResultsFound() {
     const reachedThreshold = this.searchInput.length > this.searchThreshold;
     const noSuggestions = this.places.length === 0;
-    const noResult = (this.foundPlace == null)
+    const noResult = (this.foundPlace == null);
     return (reachedThreshold) && (noSuggestions) && (noResult);
   }
 
@@ -93,20 +93,20 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
   }
 
   public isHighlighted(i) {
-    if (i == this.selectedIndex) {
+    if (i === this.selectedIndex) {
       return true;
     }
   }
 
-  public moveUp(){
+  public moveUp() {
     if (this.selectedIndex > 0) {
-      this.selectedIndex--
+      this.selectedIndex--;
     }
   }
 
-  public moveDown(){
+  public moveDown() {
     if (this.selectedIndex < this.places.length) {
-      this.selectedIndex++
+      this.selectedIndex++;
     }
   }
 
