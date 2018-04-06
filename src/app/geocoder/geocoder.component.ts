@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit,  ViewChild, ElementRef} from '@angular/core';
 import { GeocoderService } from './geocoder.service';
 import { GeocoderSuggest } from './geocoder.model';
-import * as L from 'leaflet';
+// Leaflet requires the old school way for importing
+declare var require: any;
+const L = require('leaflet');
 
 @Component({
   styleUrls: ['geocoder.component.scss'],

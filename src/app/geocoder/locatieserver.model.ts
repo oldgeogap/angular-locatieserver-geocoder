@@ -20,7 +20,6 @@ export class SuggestResultObject {
   };
 }
 
-
 export class LookupResult {
   bron: string;
   centroide_ll: string;
@@ -38,7 +37,7 @@ export class LookupResult {
 }
 
 export class LookupResponse {
-  docs: LookupResult[]
+  docs: LookupResult[];
 }
 
 export class LookupResultObject {

@@ -5,7 +5,8 @@ import { SuggestResultObject, SuggestResult, LookupResultObject, LookupResult } 
 import { GeocoderSuggest } from './geocoder.model';
 // * Make sure terraformer and terraformer WKT parser is installed */
 // import * as Terraformer from 'terraformer';
-import * as terraformerWktParser from 'terraformer-wkt-parser';
+declare var require: any;
+const terraformerWktParser = require('terraformer-wkt-parser');
 // const terraformerWktParser = require('terraformer-wkt-parser');
 @Injectable()
 export class GeocoderService {
