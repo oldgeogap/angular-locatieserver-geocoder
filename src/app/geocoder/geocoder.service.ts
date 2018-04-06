@@ -16,7 +16,9 @@ export class GeocoderService {
 
   public suggest(query: string, options?) {
     let fq = '*';
-    if (options.fq) {fq = options.fq;};
+    if (options && options.fq) {
+      fq = options.fq;
+    }
 
     return this.http.get(`${this.geocoderBaseUrl}/suggest?`, {
       params: {
@@ -43,7 +45,9 @@ export class GeocoderService {
 
   public free(searchTerm: string, options?) {
     let fq = '*';
-    if (options.fq) {fq = options.fq;};
+    if (options && options.fq) {
+      fq = options.fq;
+    }
     return this.http.get(`${this.geocoderBaseUrl}/free?`, {
       params: {
         q: searchTerm,
@@ -57,13 +61,13 @@ export class GeocoderService {
 
   private parseCollations(collations) {
     const parsedCollations = [];
-    for (let i = 0; i < collations.length; i+=2) {
+    for (let i = 0; i < collations.length; i += 2) {
       const collation  = {
         id: i,
-        naam: collations[i+1].misspellingsAndCorrections[1],
-        weergavenaam: `${collations[i+1].hits} resultaten gevonden voor <strong> ${collations[i+1].misspellingsAndCorrections[1]} </strong>`,
-        hits: collations[i+1].hits,
-      }
+        naam: collations[i + 1].misspellingsAndCorrections[1],
+        weergavenaam: `${collations[i + 1].hits} resultaten gevonden voor <strong> ${collations[i + 1].misspellingsAndCorrections[1]} </strong>`,
+        hits: collations[i + 1].hits,
+      };
       parsedCollations.push(collation);
     }
     return parsedCollations;
@@ -77,7 +81,7 @@ export class GeocoderService {
         weergavenaam: place.weergavenaam,
         score: place.score,
         highlight: suggestResultObject.highlighting[place.id].suggest[0]
-      }
+      };
     });
     return places;
   }
