@@ -127,4 +127,8 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
       return true;
     }
   }
+
+  public free(e) {
+    this.geocoderService.free(e.target.value);
+  }
 }

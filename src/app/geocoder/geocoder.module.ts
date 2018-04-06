@@ -13,4 +13,6 @@ import { GeocoderService } from './geocoder.service';
   declarations: [ GeocoderComponent ],
   providers: [ GeocoderService ]
 })
+
 export class GeocoderModule {}
+export { GeocoderService } from './geocoder.service';

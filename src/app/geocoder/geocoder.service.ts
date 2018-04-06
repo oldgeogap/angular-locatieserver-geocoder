@@ -17,14 +17,20 @@ export class GeocoderService {
 
   public suggest(query: string, options?) {
     let fq = '*';
-    if (options && options.fq) {
-      fq = options.fq;
+    let start = '10';
+    let rows = '10';
+    if (options) {
+      fq = options.fq || fq;
+      start = options.start || start;
+      rows = options.rows || rows;
     }
 
     return this.http.get(`${this.geocoderBaseUrl}/suggest?`, {
       params: {
         q: query,
-        fq: fq // Also get percelen
+        fq: fq,  // Also get percelen
+        start,
+        rows
       }
     }).toPromise().then((suggestResultObject: SuggestResultObject) => {
       const collations = this.parseCollations(suggestResultObject.spellcheck.collations);
@@ -46,16 +52,24 @@ export class GeocoderService {
 
   public free(searchTerm: string, options?) {
     let fq = '*';
-    if (options && options.fq) {
-      fq = options.fq;
+    let fl = '*';
+    let start = '10';
+    let rows = '10';
+    if (options) {
+      fq = options.fq || fq;
+      fl = options.fl || fl;
+      start = options.start || start;
+      rows = options.rows || rows;
     }
     return this.http.get(`${this.geocoderBaseUrl}/free?`, {
       params: {
         q: searchTerm,
-        fl: '*',
-        fq: fq
+        fl,
+        fq,
+        rows
       },
     }).toPromise().then((freeResultObject: LookupResultObject) => {
+      console.log(freeResultObject);
       return this.formatLookupResponse(freeResultObject);
     });
   }
