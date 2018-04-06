@@ -69,7 +69,6 @@ export class GeocoderService {
         rows
       },
     }).toPromise().then((freeResultObject: LookupResultObject) => {
-      console.log(freeResultObject);
       return this.formatLookupResponse(freeResultObject);
     });
   }
