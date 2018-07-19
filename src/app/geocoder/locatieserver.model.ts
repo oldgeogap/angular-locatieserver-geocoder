@@ -43,3 +43,18 @@ export class LookupResponse {
 export class LookupResultObject {
   response: LookupResponse;
 }
+
+export class ReverseOptions {
+  fq: string;
+  fl: string;
+  rows: number;
+  type: string;
+  distance: number;
+}
+
+export class ReverseGeometry {
+  x?: number;
+  y?: number;
+  lat?: number;
+  lon?: number;
+}

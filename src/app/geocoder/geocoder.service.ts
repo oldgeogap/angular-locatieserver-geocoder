@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { SuggestResultObject, SuggestResult, LookupResultObject, LookupResult } from './locatieserver.model';
-import { GeocoderSuggest } from './geocoder.model';
+import { SuggestResultObject, SuggestResult, LookupResultObject, ReverseOptions, ReverseGeometry} from './locatieserver.model';
+import * as querystring from 'querystring';
 
 declare var require: any;
 const terraformerWktParser = require('terraformer-wkt-parser');
@@ -70,6 +70,21 @@ export class GeocoderService {
     }).toPromise().then((freeResultObject: LookupResultObject) => {
       return this.formatLookupResponse(freeResultObject);
     });
+  }
+
+
+  public reverse(location: ReverseGeometry, options?: ReverseOptions) {
+    const params = {
+      type: (options && options.type) || '*',
+      fq: (options && options.fq) || '*',
+      fl: (options && options.fl) || '*',
+      rows: (options && options.rows) || 10,
+      distance: (options && options.distance) || 200 // meter,
+    };
+
+    const reverseUrl = 'http://test.geodata.nationaalgeoregister.nl/locatieserver/revgeo?' + querystring.stringify(location) + querystring.stringify(params);
+    return this.http.get(reverseUrl)
+
   }
 
   private parseCollations(collations) {
