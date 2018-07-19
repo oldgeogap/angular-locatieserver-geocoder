@@ -53,8 +53,8 @@ export class ReverseOptions {
 }
 
 export class ReverseGeometry {
-  x?: number;
-  y?: number;
+  X?: number;
+  Y?: number;
   lat?: number;
   lon?: number;
 }
