@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GeocoderService } from './geocoder/geocoder.module';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  constructor(private geocoderService: GeocoderService) {
+    this.geocoderService.reverse({X: 106830, Y: 428564}, {type: 'adres'}).then(test => {
+      console.log(test);
+    });
+  }
+  // Test function.
+  public onPlaceFound(e) {
+    console.log(e);
+  }
 }

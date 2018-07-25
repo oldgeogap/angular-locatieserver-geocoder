@@ -44,12 +44,21 @@ export class LookupResultObject {
   response: LookupResponse;
 }
 
+export class ReverseResponse {
+  response: {
+    docs: any[];
+    maxScore: number;
+    numFound: number;
+    start: number;
+  };
+}
+
 export class ReverseOptions {
-  fq: string;
-  fl: string;
-  rows: number;
-  type: string;
-  distance: number;
+  fq?: string;
+  fl?: string;
+  rows?: number;
+  type?: string;
+  distance?: number;
 }
 
 export class ReverseGeometry {

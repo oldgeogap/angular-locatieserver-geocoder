@@ -28,9 +28,6 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.geocoderService.reverse({X: 106830, Y: 428564}).then(test => {
-      console.log(test);
-    })
   }
 
   ngAfterViewInit() {

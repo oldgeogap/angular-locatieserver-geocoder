@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SuggestResultObject, SuggestResult, LookupResultObject, ReverseOptions, ReverseGeometry} from './locatieserver.model';
+import { SuggestResultObject, SuggestResult, LookupResultObject, ReverseOptions, ReverseGeometry, ReverseResponse} from './locatieserver.model';
 import * as querystring from 'querystring';
 
 declare var require: any;
@@ -75,7 +75,7 @@ export class GeocoderService {
 
   public reverse(location: ReverseGeometry, options?: ReverseOptions) {
     const params = {
-      type: (options && options.type) || '*',
+      type: (options && options.type) || 'adres',
       fq: (options && options.fq) || '*',
       fl: (options && options.fl) || '*',
       rows: (options && options.rows) || 10,
@@ -83,7 +83,9 @@ export class GeocoderService {
     };
 
     const reverseUrl = 'http://test.geodata.nationaalgeoregister.nl/locatieserver/revgeo?' + querystring.stringify(location) + '&' + querystring.stringify(params);
-    return this.http.get(reverseUrl).toPromise();
+    return this.http.get(reverseUrl).toPromise().then((reverseResponse: ReverseResponse) => {
+      return this.formatReverseResponse(reverseResponse);
+    });
 
   }
 
@@ -130,6 +132,21 @@ export class GeocoderService {
     });
 
     return formatted[0] || {};
+  }
+
+  private formatReverseResponse(lookupResultObject: ReverseResponse) {
+    const formatted = lookupResultObject.response.docs.map((reverseResult) => {
+      const formattedLookupResult: any = reverseResult;
+      formattedLookupResult.centroide_ll = terraformerWktParser.parse(reverseResult.centroide_ll);
+      formattedLookupResult.centroide_rd = terraformerWktParser.parse(reverseResult.centroide_rd);
+      formattedLookupResult.geometrie_rd = terraformerWktParser.parse(reverseResult.geometrie_rd);
+      formattedLookupResult.geometrie_ll = terraformerWktParser.parse(reverseResult.geometrie_ll);
+      // formattedLookupResult.bbox_rd = (new terraformer.Primitive(formattedLookupResult.geometrie_rd) as any).bbox();
+      // formattedLookupResult.bbox_ll = (new terraformer.Primitive(formattedLookupResult.geometrie_ll) as any).bbox();
+      return formattedLookupResult;
+    });
+
+    return formatted;
   }
 
 
