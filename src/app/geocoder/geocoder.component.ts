@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit,  ViewChild, ElementRef} from '@angular/core';
 import { GeocoderService } from './geocoder.service';
-import { ResponseTypes } from './locatieserver.model';
 
 // Leaflet requires the old school way for importing
 declare var require: any;
@@ -54,20 +53,10 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
       const params = {fq: '*:*'};
 
       if (this.type) {
-        const types = this.type.split(',');
-
-        if (types.length === 1) {
-          params.fq = `type:(${this.type})`;
-        } else if (types.length > 1) {
-          params.fq = `type:(`;
-          for (let i = 0; i < types.length; i++) {
-            if (i !== (types.length - 1)) {
-              params.fq += `${types[i]} OR `;
-            } else {
-              params.fq += `${types[i]})`;
-            }
-          }
-        }
+        const replace = ',';
+        const regex = new RegExp(replace, 'g');
+        const query = this.type.replace(regex, ' OR ');
+         params.fq = `type:(${query})`;
       }
 
       this.geocoderService.suggest(this.searchInput, params).then((suggestResponse) => {
