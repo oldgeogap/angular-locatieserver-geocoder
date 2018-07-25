@@ -14,7 +14,7 @@ const L = require('leaflet');
 
 export class GeocoderComponent implements OnInit, AfterViewInit {
   @ViewChild('geocoder') private geocoderRef: ElementRef;
-  @Input() type: ResponseTypes;
+  @Input() type: string;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
 
   public searchInput = '';
@@ -52,9 +52,24 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
 
     if (this.searchInput.length > this.searchThreshold) {
       const params = {fq: '*:*'};
+
       if (this.type) {
-        params.fq = `type:${this.type}`;
+        const types = this.type.split(',');
+
+        if (types.length === 1) {
+          params.fq = `type:(${this.type})`;
+        } else if (types.length > 1) {
+          params.fq = `type:(`;
+          for (let i = 0; i < types.length; i++) {
+            if (i !== (types.length - 1)) {
+              params.fq += `${types[i]} OR `;
+            } else {
+              params.fq += `${types[i]})`;
+            }
+          }
+        }
       }
+
       this.geocoderService.suggest(this.searchInput, params).then((suggestResponse) => {
         this.places = suggestResponse.places;
         this.collations = suggestResponse.collations;
