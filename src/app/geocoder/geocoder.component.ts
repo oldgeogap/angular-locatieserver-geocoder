@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit,  ViewChild, ElementRef} from '@angular/core';
 import { GeocoderService } from './geocoder.service';
-import { GeocoderSuggest } from './geocoder.model';
+import { ResponseTypes } from './locatieserver.model';
+
 // Leaflet requires the old school way for importing
 declare var require: any;
 const L = require('leaflet');
@@ -13,6 +14,7 @@ const L = require('leaflet');
 
 export class GeocoderComponent implements OnInit, AfterViewInit {
   @ViewChild('geocoder') private geocoderRef: ElementRef;
+  @Input() type: ResponseTypes;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
 
   public searchInput = '';
@@ -49,7 +51,11 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     }
 
     if (this.searchInput.length > this.searchThreshold) {
-      this.geocoderService.suggest(this.searchInput).then((suggestResponse) => {
+      const params = {fq: '*:*'};
+      if (this.type) {
+        params.fq = `type:${this.type}`;
+      }
+      this.geocoderService.suggest(this.searchInput, params).then((suggestResponse) => {
         this.places = suggestResponse.places;
         this.collations = suggestResponse.collations;
       });
