@@ -1,6 +1,6 @@
 {
   "name": "angular-geocoder",
-  "version": "6.0.20",
+  "version": "6.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
