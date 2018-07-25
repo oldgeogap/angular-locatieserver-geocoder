@@ -46,30 +46,41 @@ export class LookupOptions extends BasicGeocoderOptions {
   fl?: string;
 }
 
-
-export class SuggestResult {
-  id: string;
-  score: number;
-  type: string;
-  weergavenaam: string;
+export class ReverseOptions extends BasicGeocoderOptions {
+  fl?: string;
+  type?: string;
+  distance?: number;
 }
+
 export class SuggestResponse {
-  docs: SuggestResult[];
-  maxScore: number;
-  numFound: number;
-  start: number;
-}
-
-export class SuggestResultObject {
   highlighting: {};
-  response: SuggestResponse;
+  response: {
+    docs: SuggestObject[];
+    maxScore: number;
+    numFound: number;
+    start: number;
+  };
   spellcheck: {
     collations: any,
     suggestions: any
   };
 }
 
-export class LookupResult {
+export class SuggestObject {
+  id: string;
+  score: number;
+  type: string;
+  weergavenaam: string;
+}
+
+
+export class LookupResponse {
+  response: {
+    docs: LookupObject[]
+  };
+}
+
+export class LookupObject {
   bron: string;
   centroide_ll: string;
   centroide_rd: string;
@@ -85,13 +96,6 @@ export class LookupResult {
   weergavenaam: string;
 }
 
-export class LookupResponse {
-  docs: LookupResult[];
-}
-
-export class LookupResultObject {
-  response: LookupResponse;
-}
 
 export class ReverseResponse {
   response: {
@@ -100,14 +104,6 @@ export class ReverseResponse {
     numFound: number;
     start: number;
   };
-}
-
-export class ReverseOptions {
-  fq?: string;
-  fl?: string;
-  rows?: number;
-  type?: string;
-  distance?: number;
 }
 
 export class ReverseGeometry {

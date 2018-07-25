@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SuggestResultObject,
-        SuggestResult,
-        LookupResultObject,
+import { SuggestResponse,
         ReverseOptions,
         ReverseGeometry,
         ReverseResponse,
         SuggestOptions,
-        LookupOptions} from './locatieserver.model';
+        LookupOptions,
+        LookupResponse,
+        SuggestObject} from './locatieserver.model';
 
 import * as querystring from 'querystring';
 
@@ -37,8 +37,8 @@ export class GeocoderService {
     }
 
     return this.http.get(`${this.geocoderBaseUrl}/suggest?` + querystring.stringify(params))
-    .toPromise().then((suggestResultObject: SuggestResultObject) => {
-      const collations = this.parseCollations(suggestResultObject.spellcheck.collations);
+    .toPromise().then((suggestResultObject: SuggestResponse) => {
+      const collations = this.formatCollations(suggestResultObject.spellcheck.collations);
       const places = this.formatPlaces(suggestResultObject);
       return {collations, places};
     });
@@ -54,9 +54,8 @@ export class GeocoderService {
       params = Object.assign(params, options);
     }
 
-
-    return this.http.get(`${this.geocoderBaseUrl}/lookup?` + querystring.stringify(params)).toPromise().then((lookupResultObject: LookupResultObject) => {
-      return this.formatLookupResponse(lookupResultObject);
+    return this.http.get(`${this.geocoderBaseUrl}/lookup?` + querystring.stringify(params)).toPromise().then((lookupResponse: LookupResponse) => {
+      return this.formatLookupResponse(lookupResponse);
     });
   }
 
@@ -74,11 +73,10 @@ export class GeocoderService {
     }
 
     return this.http.get(`${this.geocoderBaseUrl}/free?` + querystring.stringify(params))
-    .toPromise().then((freeResultObject: LookupResultObject) => {
-      return this.formatLookupResponse(freeResultObject);
+    .toPromise().then((freeResponse: ReverseResponse) => {
+      return this.formatReverseResponse(freeResponse);
     });
   }
-
 
   public reverse(location: ReverseGeometry, options?: ReverseOptions) {
     let params = {
@@ -100,7 +98,7 @@ export class GeocoderService {
 
   }
 
-  private parseCollations(collations) {
+  private formatCollations(collations) {
     const parsedCollations = [];
     for (let i = 0; i < collations.length; i += 2) {
       const collation  = {
@@ -114,14 +112,14 @@ export class GeocoderService {
     return parsedCollations;
   }
 
-  private formatPlaces(suggestResultObject: SuggestResultObject) {
-    const places = suggestResultObject.response.docs.map((place: SuggestResult) => {
+  private formatPlaces(suggestResponse: SuggestResponse) {
+    const places = suggestResponse.response.docs.map((place: SuggestObject) => {
       return {
         id: place.id,
         type: place.type,
         weergavenaam: place.weergavenaam,
         score: place.score,
-        highlight: suggestResultObject.highlighting[place.id].suggest[0]
+        highlight: suggestResponse.highlighting[place.id].suggest[0]
       };
     });
     return places;
@@ -130,9 +128,9 @@ export class GeocoderService {
   /**
    * Parse WKT in lookup response.
    */
-  private formatLookupResponse(lookupResultObject: LookupResultObject) {
-    const formatted = lookupResultObject.response.docs.map((lookupResult) => {
-      const formattedLookupResult: any = lookupResult;
+  private formatLookupResponse(lookupResponse: LookupResponse) {
+    const formatted = lookupResponse.response.docs.map((lookupResult) => {
+      const formattedLookupResult = lookupResult;
       formattedLookupResult.centroide_ll = terraformerWktParser.parse(lookupResult.centroide_ll);
       formattedLookupResult.centroide_rd = terraformerWktParser.parse(lookupResult.centroide_rd);
       formattedLookupResult.geometrie_rd = terraformerWktParser.parse(lookupResult.geometrie_rd);
@@ -147,7 +145,7 @@ export class GeocoderService {
 
   private formatReverseResponse(lookupResultObject: ReverseResponse) {
     const formatted = lookupResultObject.response.docs.map((reverseResult) => {
-      const formattedLookupResult: any = reverseResult;
+      const formattedLookupResult = reverseResult;
       formattedLookupResult.centroide_ll = terraformerWktParser.parse(reverseResult.centroide_ll);
       formattedLookupResult.centroide_rd = terraformerWktParser.parse(reverseResult.centroide_rd);
       formattedLookupResult.geometrie_rd = terraformerWktParser.parse(reverseResult.geometrie_rd);

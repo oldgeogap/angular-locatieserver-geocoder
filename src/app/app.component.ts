@@ -9,9 +9,12 @@ import { GeocoderService } from './geocoder/geocoder.module';
 export class AppComponent {
   title = 'app';
   constructor(private geocoderService: GeocoderService) {
-    this.geocoderService.reverse({X: 106830, Y: 428564}, {type: 'adres'}).then(test => {
-      console.log(test);
-    });
+    // this.geocoderService.reverse({X: 106830, Y: 428564}, {type: 'adres'}).then(test => {
+    //   console.log(test);
+    // });
+    // this.geocoderService.free('oudwijkerlaan 28').then(test => {
+    //   console.log(test);
+    // });
   }
   // Test function.
   public onPlaceFound(e) {
