@@ -1,3 +1,52 @@
+// https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
+
+export class BasicGeocoderOptions {
+  rows?: number;
+  start?: number;
+  wt?: string;
+  indent?: boolean;
+  lat?: number;
+  lon?: number;
+  fq?: string;
+}
+
+export enum ResponseTypes {
+  provincie,
+  gemeente,
+  woonplaats,
+  weg,
+  postcode,
+  adres,
+  perceel,
+  hectometerpaal,
+  wijk,
+  buurt,
+  waterschapsgrens,
+  appartementsrecht
+}
+
+export enum ResponseSources {
+  BAG,
+  NWB,
+  'BAG/NWB',
+  DKK,
+  'Bestuurlijke Grenzen',
+  CBS,
+  HWH // Waterschapshuis
+}
+
+export class SuggestOptions extends BasicGeocoderOptions {
+  fl?: string;
+  sort?: string;
+  qf?: string;
+  bq?: string;
+}
+
+export class LookupOptions extends BasicGeocoderOptions {
+  fl?: string;
+}
+
+
 export class SuggestResult {
   id: string;
   score: number;

@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SuggestResultObject, SuggestResult, LookupResultObject, ReverseOptions, ReverseGeometry, ReverseResponse} from './locatieserver.model';
+import { SuggestResultObject,
+        SuggestResult,
+        LookupResultObject,
+        ReverseOptions,
+        ReverseGeometry,
+        ReverseResponse,
+        SuggestOptions,
+        LookupOptions} from './locatieserver.model';
+
 import * as querystring from 'querystring';
 
 declare var require: any;
@@ -12,75 +20,78 @@ export class GeocoderService {
   public geocoderBaseUrl = 'https://geodata.nationaalgeoregister.nl/locatieserver/v3';
   constructor(
     private http: HttpClient,
-  ) {}
+  ) {
 
-  public suggest(query: string, options?) {
-    let fq = '*';
-    let start = '0';
-    let rows = '10';
+  }
+
+  public suggest(query: string, options?: SuggestOptions) {
+    let params = {
+      q: query,
+      fq: '*',  // Also get percelen
+      start: 0,
+      rows: 10,
+    };
+
     if (options) {
-      fq = options.fq || fq;
-      start = options.start || start;
-      rows = options.rows || rows;
+      params = Object.assign(params, options);
     }
 
-    return this.http.get(`${this.geocoderBaseUrl}/suggest?`, {
-      params: {
-        q: query,
-        fq: fq,  // Also get percelen
-        start,
-        rows
-      }
-    }).toPromise().then((suggestResultObject: SuggestResultObject) => {
+    return this.http.get(`${this.geocoderBaseUrl}/suggest?` + querystring.stringify(params))
+    .toPromise().then((suggestResultObject: SuggestResultObject) => {
       const collations = this.parseCollations(suggestResultObject.spellcheck.collations);
       const places = this.formatPlaces(suggestResultObject);
       return {collations, places};
     });
   }
 
-  public lookup(id: string) {
-    return this.http.get(`${this.geocoderBaseUrl}/lookup?`, {
-      params: {
-        id: id,
-        fl: '*',
-      }
-    }).toPromise().then((lookupResultObject: LookupResultObject) => {
+  public lookup(id: string, options?: LookupOptions) {
+    let params = {
+      id: id,
+      fl: '*'
+    };
+
+    if (options) {
+      params = Object.assign(params, options);
+    }
+
+
+    return this.http.get(`${this.geocoderBaseUrl}/lookup?` + querystring.stringify(params)).toPromise().then((lookupResultObject: LookupResultObject) => {
       return this.formatLookupResponse(lookupResultObject);
     });
   }
 
-  public free(searchTerm: string, options?) {
-    let fq = '*';
-    let fl = '*';
-    let start = '0';
-    let rows = '10';
+  public free(searchTerm: string, options?: SuggestOptions) {
+    let params = {
+      q: searchTerm,
+      fl: '*',
+      fq: '*',
+      rows: 10,
+      start: 0,
+    };
+
     if (options) {
-      fq = options.fq || fq;
-      fl = options.fl || fl;
-      start = options.start || start;
-      rows = options.rows || rows;
+      params = Object.assign(params, options);
     }
-    return this.http.get(`${this.geocoderBaseUrl}/free?`, {
-      params: {
-        q: searchTerm,
-        fl,
-        fq,
-        rows
-      },
-    }).toPromise().then((freeResultObject: LookupResultObject) => {
+
+    return this.http.get(`${this.geocoderBaseUrl}/free?` + querystring.stringify(params))
+    .toPromise().then((freeResultObject: LookupResultObject) => {
       return this.formatLookupResponse(freeResultObject);
     });
   }
 
 
   public reverse(location: ReverseGeometry, options?: ReverseOptions) {
-    const params = {
-      type: (options && options.type) || 'adres',
-      fq: (options && options.fq) || '*',
-      fl: (options && options.fl) || '*',
-      rows: (options && options.rows) || 10,
-      distance: (options && options.distance) || 200 // meter,
+    let params = {
+      type:  'adres',
+      fq: '*',
+      fl: '*',
+      rows: 10,
+      distance: 200 // meter,
     };
+
+    if (options) {
+      params = Object.assign(params, options);
+    }
 
     const reverseUrl = 'http://test.geodata.nationaalgeoregister.nl/locatieserver/revgeo?' + querystring.stringify(location) + '&' + querystring.stringify(params);
     return this.http.get(reverseUrl).toPromise().then((reverseResponse: ReverseResponse) => {
