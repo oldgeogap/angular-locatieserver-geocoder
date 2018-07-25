@@ -28,8 +28,7 @@
     "rxjs": "^6.2.0",
     "terraformer": "^1.0.8",
     "terraformer-wkt-parser": "^1.1.2",
-    "zone.js": "^0.8.26",
-    "rxjs-compat": "^6.0.0-rc.0"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.3",
