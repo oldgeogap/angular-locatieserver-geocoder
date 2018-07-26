@@ -14,6 +14,7 @@ const L = require('leaflet');
 export class GeocoderComponent implements OnInit, AfterViewInit {
   @ViewChild('geocoder') private geocoderRef: ElementRef;
   @Input() type: string;
+  @Input() placeholder: string;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
 
   public searchInput = '';
@@ -23,7 +24,6 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
   public foundPlace: any = null;
   public selectedItem = [];
   public selectedIndex = -1;
-
 
   constructor(public geocoderService: GeocoderService) {
   }
@@ -136,5 +136,14 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     if (this.searchInput.length > 0) {
       return true;
     }
+  }
+
+  public formatPlaceholder() {
+    let placeholderText = 'Zoeken op de kaart...';
+
+    if (this.placeholder) {
+      placeholderText = this.placeholder;
+    }
+    return placeholderText;
   }
 }

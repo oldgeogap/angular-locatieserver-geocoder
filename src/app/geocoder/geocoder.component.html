@@ -6,7 +6,7 @@
       >
   <div class="geocoder-search-container">
     <input class="geocoder-search-input"
-          placeholder="Zoek op adres, postcode of perceel..."
+          [placeholder]="formatPlaceholder()"
           [(ngModel)]="searchInput"
           (keyup)="suggest($event)"
           (focus)="suggest($event)"
