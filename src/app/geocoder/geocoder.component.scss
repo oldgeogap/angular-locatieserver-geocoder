@@ -1,35 +1,29 @@
 ::-webkit-input-placeholder {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
 :-moz-placeholder {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
 ::-moz-placeholder {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
 :-ms-input-placeholder {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
 ::-ms-input-placeholder {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
 
 :placeholder-shown {
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
@@ -40,7 +34,6 @@
 
 p, span, input, li{
   margin: 0;
-  font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   color: #797979;
 }
@@ -48,6 +41,7 @@ p, span, input, li{
 .geocoder-container{
   width: 100%;
   position: relative;
+  max-width: 100%;
 }
 
 .geocoder-search-container{
@@ -60,8 +54,11 @@ p, span, input, li{
 .geocoder-search-input {
   padding: 15px;
   border: none;
-  width: 262px;
+  width: 95%;
+  width: calc(100% - 80px);
   overflow: hidden;
+  max-width: 100%;
+
 }
 
 button{
@@ -73,7 +70,7 @@ button{
   top: 13px;
   right: 50px;
   padding-right: 15px;
-  background: none;
+  background: #FFF;
   border: none;
   border-right: 1px solid #797979;
 }
@@ -81,7 +78,8 @@ button{
 .closeButton{
   top: 10px;
   right: 10px;
-  background: none;
+  padding-left: 16px;
+  background: #FFF;
   border: none;
 }
 
@@ -101,6 +99,9 @@ svg{
   background: #fff;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   width: 100%;
+  z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .geocoder-suggestions-list, .geocoder-collations-list {
@@ -146,6 +147,11 @@ svg{
   width: 100%;
   width: calc(100% - 30px);
   padding: 15px;
+  z-index: 1;
+}
+
+.geocoder-collation {
+  z-index: 1;
 }
 
 .geocoder-collation-container{
@@ -154,6 +160,7 @@ svg{
   background: #fff;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   width: 100%;
+  z-index: 1;
 }
 
 .geocoder-collation-container li{
