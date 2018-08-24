@@ -1,27 +1,59 @@
-# AngularGeocoder
+# PDOK Locatieserver Angular Component
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.2.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Installatie
+Het installeren van de PDOK Locatieserver Angular Component is eenvoudig met [NPM](https://www.npmjs.com/package/angular-geocoder) via het volgende command: `npm install angular-geocoder --save`
 
-## Code scaffolding
+De meest recente versie van het PDOK Locatieserver Angular Component ondersteunt Angular 6.X.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Gebruik
+Om de geocoder te gebruiken in een Angular applicatie moet eerst de `GeocoderModule` worden geimporteerd in de module waar de geocoder zal komen te staan.
 
-## Build
+`
+import { GeocoderModule } from  'angular-geocoder';`
+`@NgModule({`
+`...`
+`imports: [GeocoderModule]`
+`...`
+`})`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Vervolgens kan het `GeocoderComponent` worden geimporteerd in een ander component via de tag:
+ `<geocoder> </geocoder>`
 
-## Running unit tests
+Om iets met het zoekresultaat van de geocoder te doen, kan er worden geluisterd naar het `placeFound` event:
+`<geocoder (placeFound)="onPlaceFound($event)> </geocoder>" `
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Zoeken op specifiek type
+Er kan gezocht worden op een specifiek type (zoals, `adres`, `weg`, of `perceel`) via de `type` property. Meerdere typen kunnen worden gekozen door ze te scheiden door  een komma `,` :
+`<geocoder type="adres"> </geocoder>" `
+`<geocoder type="adres,weg,buurt"> </geocoder>" `
 
-## Running end-to-end tests
+## Veranderen placeholder message
+De placeholder message in de geocoder kan worden veranderd door de `placeholder` property te gebruiken:
+`<geocoder placeholder="Custom text..."> </geocoder>`
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## GeocoderService
+Het is ook mogelijk om alleen de `GeocoderService` te gebruiken. Deze kan worden geïmporteerd in een andere service of component door het volgende in de `constructor` mee te geven: 
 
-## Further help
+`constructor(private geocoderService: GeocoderService)`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Dit maakt het mogelijk om de 4 verschillende endpoints `free,suggest,lookup,revgeo` te gebruiken zonder de standaard megeleverde zoekbalk. De `GeocoderService` retourneert standaard een `Promise`.
+
+### Extra parameters meegeven 
+Het is mogelijk om extra parameters mee te geven aan de  `free,suggest,lookup,revgeo` endpoints. Zo kan bijvoorbeeld een filterquery worden meegegeven die alleen maar BAG objecten retourneert: 
+
+`this.geocoderService.suggest('Neude', {fq: 'bron:BAG'}).then(result => {`
+`// do something`
+`})`
+
+Een compleet overzicht over welke parameters bij welk endpoint werken is te vinden in de API documentatie van de Locatieserver: https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
+
+# FAQ
+
+#### In welk coördinaatsysteem worden de resultaatgeometrieen teruggegeven?
+Deze worden zowel in het Rijksdriehoekstelsel (EPSG:28992) als in WGS84 (EPSG:4326) teruggegeven.
+
+#### Waar kan ik de documentatie van de PDOK locatieserver vinden?
+https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
+
