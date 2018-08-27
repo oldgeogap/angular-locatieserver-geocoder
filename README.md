@@ -13,7 +13,7 @@ De meest recente versie van het PDOK Locatieserver Angular Component ondersteunt
  - Eenvoudig te customizen
 
 # Gebruik
-Om de geocoder te gebruiken in een Angular applicatie moet eerst de `GeocoderModule` worden geimporteerd in de module waar de geocoder zal komen te staan.
+Om de geocoder te gebruiken in een Angular applicatie moet eerst de `GeocoderModule` worden geïmporteerd in de module waar de geocoder zal komen te staan.
 
 `
 import { GeocoderModule } from  'angular-geocoder';`
@@ -23,10 +23,10 @@ import { GeocoderModule } from  'angular-geocoder';`
 `...`
 `})`
 
-Vervolgens kan het `GeocoderComponent` worden geimporteerd in een ander component via de tag:
+Vervolgens kan het `GeocoderComponent` worden geimporteerd in een ander component via de html-tag:
  `<geocoder> </geocoder>`
 
-Om iets met het zoekresultaat van de geocoder te doen, kan er worden geluisterd naar het `placeFound` event:
+Om iets met het zoekresultaat van de geocoder te doen, moet er worden geluisterd naar het `placeFound` event:
 `<geocoder (placeFound)="onPlaceFound($event)> </geocoder>" `
 
 ## Zoeken op specifiek type
@@ -39,20 +39,20 @@ De placeholder message in de geocoder kan worden veranderd door de `placeholder`
 `<geocoder placeholder="Custom text..."> </geocoder>`
 
 ## GeocoderService
-Het is ook mogelijk om alleen de `GeocoderService` te gebruiken. Deze kan worden geïmporteerd in een andere service of component door het volgende in de `constructor` mee te geven: 
+Het is ook mogelijk om alleen de `GeocoderService` te gebruiken. Deze kan worden geïmporteerd in een andere service of component door de service in de `constructor` van de component of service mee te geven: 
 
 `constructor(private geocoderService: GeocoderService)`
 
-Dit maakt het mogelijk om de 4 verschillende endpoints `free,suggest,lookup,revgeo` te gebruiken zonder de standaard megeleverde zoekbalk. De `GeocoderService` retourneert standaard een `Promise`.
+Dit maakt het mogelijk om de 4 verschillende endpoints `free,suggest,lookup,revgeo` te gebruiken zonder de standaard megeleverde zoekbalk. De `GeocoderService` retourneert standaard een `Promise`. 
 
 ### Extra parameters meegeven 
-Het is mogelijk om extra parameters mee te geven aan de  `free,suggest,lookup,revgeo` endpoints. Zo kan bijvoorbeeld een filterquery worden meegegeven die alleen maar BAG objecten retourneert: 
+Het is mogelijk om extra parameters mee te geven aan de `free,suggest,lookup,revgeo` endpoints. Zo kan bijvoorbeeld een filterquery worden meegegeven die alleen maar BAG objecten retourneert: 
 
 `this.geocoderService.suggest('Neude', {fq: 'bron:BAG'}).then(result => {`
 `// do something`
 `});`
 
-Een compleet overzicht over welke parameters bij welk endpoint werken is te vinden in de API documentatie van de Locatieserver: https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
+Een compleet overzicht over welke parameters bij welk endpoint werken is te vinden in de [API documentatie](https://github.com/PDOK/locatieserver/wiki/API-Locatieserver) van de Locatieserver: 
 
 # FAQ
 
