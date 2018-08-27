@@ -1,6 +1,6 @@
 {
-  "name": "@geogap/angular-geocoder",
-  "version": "1.0.0",
+  "name": "angular-geocoder",
+  "version": "6.1.5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
