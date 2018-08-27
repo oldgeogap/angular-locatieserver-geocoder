@@ -1,11 +1,16 @@
 # PDOK Locatieserver Angular Component
 
-
-
 # Installatie
 Het installeren van de PDOK Locatieserver Angular Component is eenvoudig met [NPM](https://www.npmjs.com/package/angular-geocoder) via het volgende command: `npm install angular-geocoder --save`
 
 De meest recente versie van het PDOK Locatieserver Angular Component ondersteunt Angular 6.X.
+
+# Features
+ - Responses worden gelijk geparsed naar GeoJSON (http://geojson.org/)
+ - Autocomplete functionaliteit
+ - Keypresses (up, down, enter) worden ondersteunt in het doorlopen van de zoek
+ - Ondersteunt zowel RD (EPSG:28992) als WGS84 (EPSG:4326)
+ - Eenvoudig te customizen
 
 # Gebruik
 Om de geocoder te gebruiken in een Angular applicatie moet eerst de `GeocoderModule` worden geimporteerd in de module waar de geocoder zal komen te staan.
@@ -45,7 +50,7 @@ Het is mogelijk om extra parameters mee te geven aan de  `free,suggest,lookup,re
 
 `this.geocoderService.suggest('Neude', {fq: 'bron:BAG'}).then(result => {`
 `// do something`
-`})`
+`});`
 
 Een compleet overzicht over welke parameters bij welk endpoint werken is te vinden in de API documentatie van de Locatieserver: https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
 
@@ -57,3 +62,5 @@ Deze worden zowel in het Rijksdriehoekstelsel (EPSG:28992) als in WGS84 (EPSG:43
 #### Waar kan ik de documentatie van de PDOK locatieserver vinden?
 https://github.com/PDOK/locatieserver/wiki/API-Locatieserver
 
+# Meehelpen?
+Stuur een mailtje naar info@geogap.nl of kijk voor onze contactgegevens op https://geogap.nl .
