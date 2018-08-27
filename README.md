@@ -6,7 +6,7 @@ Het installeren van de PDOK Locatieserver Angular Component is eenvoudig met [NP
 De meest recente versie van het PDOK Locatieserver Angular Component ondersteunt Angular 6.X.
 
 # Features
- - Responses worden gelijk geparsed naar GeoJSON (http://geojson.org/)
+ - Responses worden gelijk geparsed van WKT naar GeoJSON (http://geojson.org/)
  - Autocomplete functionaliteit
  - Keypresses (up, down, enter) worden ondersteunt in het doorlopen van de zoek
  - Ondersteunt zowel RD (EPSG:28992) als WGS84 (EPSG:4326)
@@ -28,6 +28,10 @@ Vervolgens kan het `GeocoderComponent` worden geimporteerd in een ander componen
 
 Om iets met het zoekresultaat van de geocoder te doen, moet er worden geluisterd naar het `placeFound` event:
 `<geocoder (placeFound)="onPlaceFound($event)> </geocoder>" `
+
+`public onPlaceFound(place) {`
+`// Pan map to place, or something else...`
+`}`
 
 ## Zoeken op specifiek type
 Er kan gezocht worden op een specifiek type (zoals, `adres`, `weg`, of `perceel`) via de `type` property. Meerdere typen kunnen worden gekozen door ze te scheiden door  een komma `,` :
