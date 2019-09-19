@@ -87,11 +87,13 @@ export class GeocoderService {
       distance: 200 // meter,
     };
 
+    const plainLocation: any = Object.assign({}, location);
+
     if (options) {
       params = Object.assign(params, options);
     }
 
-    const reverseUrl = 'http://test.geodata.nationaalgeoregister.nl/locatieserver/revgeo?' + querystring.stringify(location) + '&' + querystring.stringify(params);
+    const reverseUrl = 'http://test.geodata.nationaalgeoregister.nl/locatieserver/revgeo?' + querystring.stringify(plainLocation) + '&' + querystring.stringify(params);
     return this.http.get(reverseUrl).toPromise().then((reverseResponse: ReverseResponse) => {
       return this.formatReverseResponse(reverseResponse);
     });

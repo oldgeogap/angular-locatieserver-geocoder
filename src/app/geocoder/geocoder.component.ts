@@ -8,11 +8,11 @@ const L = require('leaflet');
 @Component({
   styleUrls: ['geocoder.component.scss'],
   templateUrl: 'geocoder.component.html',
-  selector: 'geocoder'
+  selector: 'app-geocoder'
 })
 
 export class GeocoderComponent implements OnInit, AfterViewInit {
-  @ViewChild('geocoder') private geocoderRef: ElementRef;
+  @ViewChild('geocoder', {static: true}) private geocoderRef: ElementRef;
   @Input() type: string;
   @Input() placeholder: string;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
@@ -44,7 +44,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public suggest(event: KeyboardEvent) {
+  public suggest(event?: KeyboardEvent) {
     if (event && event.code && event.code === 'Enter') {
       return;
     }
@@ -100,7 +100,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     return this.collations.length > 0 && this.places.length === 0;
   }
 
-  private fillInput(content: string) {
+  fillInput(content: string) {
     this.searchInput = content;
   }
 
