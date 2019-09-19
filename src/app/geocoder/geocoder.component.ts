@@ -44,7 +44,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public suggest(event: KeyboardEvent) {
+  public suggest(event?: KeyboardEvent) {
     if (event && event.code && event.code === 'Enter') {
       return;
     }
@@ -100,7 +100,7 @@ export class GeocoderComponent implements OnInit, AfterViewInit {
     return this.collations.length > 0 && this.places.length === 0;
   }
 
-  private fillInput(content: string) {
+  fillInput(content: string) {
     this.searchInput = content;
   }
 
