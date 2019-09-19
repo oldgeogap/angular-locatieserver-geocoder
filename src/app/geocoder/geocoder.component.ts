@@ -8,11 +8,11 @@ const L = require('leaflet');
 @Component({
   styleUrls: ['geocoder.component.scss'],
   templateUrl: 'geocoder.component.html',
-  selector: 'geocoder'
+  selector: 'app-geocoder'
 })
 
 export class GeocoderComponent implements OnInit, AfterViewInit {
-  @ViewChild('geocoder') private geocoderRef: ElementRef;
+  @ViewChild('geocoder', {static: true}) private geocoderRef: ElementRef;
   @Input() type: string;
   @Input() placeholder: string;
   @Output() placeFound: EventEmitter<any> = new EventEmitter<any>();
